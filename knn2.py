@@ -12,13 +12,18 @@ from scipy.sparse import csr_matrix
 
 import csv
 
-with open('train.dat','r') as f:
+with open('/Users/wppa/Desktop/CMPE_139_Knn/KNNExample_Movie/train.dat','r') as f:
     df = pd.DataFrame(l.rstrip().split() for l in f)
 
 # print(df)
 vals = df.ix[:,:].values
-names = [n[0][2:] for n in vals]
-cls = [n[0][0] for n in vals]
+# print(vals)
+Sentiments_names = [n[0][0:] for   n in vals]
+# print(Sentiments_names)
+names = [n[2][5:] for n in vals]
+# print(names)
+
+# cls = [n[0][0] for n in vals]
 
 def cmer(name, c=3):
     r""" Given a name and parameter c, return the vector of c-mers associated with the name
@@ -131,4 +136,4 @@ def findNeighborsForName(name, c=1, k=1):
     sims = list(zip(dots.indices, dots.data))
     sims.sort(key=lambda x: x[1], reverse=True)
     return [names[s[0]] for s in sims[:k] if s[1] > 0 ]
-print(names)
+findNeighborsForName("ing", c=2, k=5)
